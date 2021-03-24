@@ -6,7 +6,13 @@ class RectangleView: UIView {
     init(frame: CGRect, color: UIColor = UIColor.red, lineWidth: Double = 5, radius: Double = 0) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
-        let rectanglePath = UIBezierPath(roundedRect: frame, cornerRadius: CGFloat(radius))
+        let rectanglePath = UIBezierPath()
+        rectanglePath.move(to: frame.origin)
+        rectanglePath.addLine(to: CGPoint(x: frame.origin.x, y: frame.maxY))
+        rectanglePath.addLine(to: CGPoint(x: frame.maxX, y: frame.maxY))
+        rectanglePath.addLine(to: CGPoint(x: frame.maxX, y: frame.origin.y))
+        rectanglePath.addLine(to: CGPoint(x: frame.origin.x - CGFloat(lineWidth/2), y: frame.origin.y))
+        
         rectangleLayer = CAShapeLayer()
         rectangleLayer.path = rectanglePath.cgPath
         rectangleLayer.fillColor = UIColor.clear.cgColor

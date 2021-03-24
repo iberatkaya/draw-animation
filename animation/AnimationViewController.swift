@@ -217,6 +217,8 @@ class AnimationViewController: UIViewController {
     //Author: https://stackoverflow.com/users/1966109/imanou-petit.
     func captureScreen() -> UIImage? {
         stackView.isHidden = true
+        bottomRightLabel.isHidden = true
+        topLeftLabel.isHidden = true
         var screenshotImage :UIImage?
         let layer = UIApplication.shared.keyWindow!.layer
         let scale = UIScreen.main.scale
@@ -229,6 +231,8 @@ class AnimationViewController: UIViewController {
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         }
         stackView.isHidden = false
+        bottomRightLabel.isHidden = false
+        topLeftLabel.isHidden = false
         return screenshotImage
     }
 }
