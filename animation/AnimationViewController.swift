@@ -108,6 +108,14 @@ class AnimationViewController: UIViewController {
         captureScreen()
     }
     
+    ///The counter for the total number of circles.
+    ///Used for testing.
+    var circleCtr = 0
+    
+    ///The counter for the total number of rectangles.
+    ///Used for testing.
+    var rectangleCtr = 0
+    
     func addRectangeView() {
         guard let xStr = xValueField.text,
               let yStr = yValueField.text,
@@ -133,8 +141,11 @@ class AnimationViewController: UIViewController {
         let frame = CGRect(x: x/2-width/4, y: y/2-width/4, width: width, height: width)
 
         let rectangleView = RectangleView(frame: frame, color: UIColor.random, lineWidth: Double(strokeWidth))
+        rectangleCtr += 1
+        
         view.addSubview(rectangleView)
         view.sendSubviewToBack(rectangleView)
+        rectangleView.accessibilityIdentifier = "rectangle_\(rectangleCtr)"
         rectangleView.draw(duration: TimeInterval(durationSlider.value))
     }
 
@@ -164,14 +175,17 @@ class AnimationViewController: UIViewController {
         let frame = CGRect(x: x, y: y, width: circleRadius, height: circleRadius)
 
         let circleView = CircleView(frame: frame, color: UIColor.random, lineWidth: Double(circleStrokeWidth), radius: circleRadius)
+        circleCtr += 1
         view.addSubview(circleView)
         view.sendSubviewToBack(circleView)
+        circleView.accessibilityIdentifier = "circle_\(circleCtr)"
         circleView.draw(duration: TimeInterval(durationSlider.value))
     }
 
     func displayAlert(_ text: String) {
         let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in }))
+        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { _ in })
+        alert.addAction(alertAction)
         present(alert, animated: true)
 
         let duration: Double = 5
